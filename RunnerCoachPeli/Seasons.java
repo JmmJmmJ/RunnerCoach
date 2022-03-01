@@ -32,14 +32,13 @@ public class Seasons {
 	 * @param months montako kuukautta siirryt‰‰n eteenp‰in
 	 */
 	public void nextMonth(int months) {
-		int kuukausi = (months+month) % 12;		
-		int kausi = (seasonN*12+months+month)/12;
-		
+		int kuukausi = (months+month) % 12;
 		if (kuukausi == 0 ) {
-			month = 12;
-		} else {
-		month = kuukausi;
+			kuukausi = 12;
 		}
+		int kausi = (seasonN*12+month+months-1)/12;
+
+		month = kuukausi;
 		seasonN = kausi;
 	}
 
