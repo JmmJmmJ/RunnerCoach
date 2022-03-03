@@ -61,5 +61,9 @@ public class Season {
 	public void addRunner(Runner runner) {
 		runners.add(runner);
 	}
+	
+	public List<Runner> getRunners() {
+		return runners;
+	}
 
 }

@@ -182,6 +182,7 @@ public class PeliSwing {
 	
 	/**
 	 * Muuntaa sekunnit minuuteiksi ja sekunneiksi
+	 * TODO korjaa loppunolla (25:1 -> 25:10)
 	 * @param time
 	 * @return
 	 */

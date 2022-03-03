@@ -10,20 +10,21 @@ import java.util.List;
 public class Seasons {
 	private int seasonN = 1;
 	private int month = 1;
-	private Season season;
+	private List<Season> seasons = new ArrayList<Season>();
 	private List<Runner> runners = new ArrayList<Runner>();
 
 	public Seasons(List<Runner> runners) {
 		this.runners = runners;
-		season = new Season(1);
+		
+		seasons.add(new Season(1));
 
 		for (Runner runner : runners) {
-			season.addRunner(runner);
+			seasons.get(seasonN-1).addRunner(runner);
 		}
 	}
 	
 	public Seasons() {
-		season = new Season(1);
+		seasons.add(new Season(1));
 	}
 	
 	/**
@@ -37,16 +38,39 @@ public class Seasons {
 			kuukausi = 12;
 		}
 		int kausi = (seasonN*12+month+months-1)/12;
+		
+		if (seasonN != kausi) {
+			seasons.add(new Season(kausi));
+			this.addRunners(runners, kausi);
+		}
 
 		month = kuukausi;
 		seasonN = kausi;
 	}
 
 	/**
-	 * Lis‰‰ kaudelle osallistuvat juoksijat kisaan
+	 * Lis‰‰ juoksijan kaudelle
+	 * TODO lis‰‰ mill‰ perusteella juoksijat valitaan kauteen
+	 * @param runner
+	public void addRunner(Runner runner) {	
+			seasons.get(seasonN-1).addRunner(runner);
+	}
+	*/
+	
+	/**
+	 * Lis‰‰ juoksijat kaudelle
+	 * TODO lis‰‰ mill‰ perusteella juoksijat valitaan kauteen
+	 * @param runners
+	 * @param kausi
 	 */
-	public void addRunner(Runner runner) {
-		season.addRunner(runner);
+	public void addRunners(List<Runner> runners, int kausi) {
+		for (Runner runner : runners) {
+			seasons.get(kausi-1).addRunner(runner);
+		}
+	}
+	
+	public Season getSeasonObj() {
+		return seasons.get((seasonN)-1);
 	}
 
 	public int getSeason() {
@@ -57,11 +81,12 @@ public class Seasons {
 		return month;
 	}
 
+	
 	/**
-	 * Lis‰‰ kisaan osallistuvat juoksijat kisaan
+	 * Lis‰‰ seuraavaan kisaan osallistuvat juoksijat kisaan
 	 */
 	public void addRunners2Race() {
-		season.addRunners2Race(month);
+		seasons.get(seasonN-1).addRunners2Race(month);
 	}
 
 	/**
@@ -70,7 +95,7 @@ public class Seasons {
 	 * @return seuraava kisa
 	 */
 	public Race getRace() {
-		return season.getRace(month);
+		return seasons.get(seasonN-1).getRace(month);
 	}
 
 	public void setSeason(int season) {
