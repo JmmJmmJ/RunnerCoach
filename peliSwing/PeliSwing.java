@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,6 +14,7 @@ import javax.swing.JTextPane;
 
 import RunnerCoachPeli.Race;
 import RunnerCoachPeli.RaceEng;
+import RunnerCoachPeli.Result;
 import RunnerCoachPeli.Runner;
 import RunnerCoachPeli.Seasons;
 
@@ -34,7 +36,7 @@ public class PeliSwing {
 	private JLabel lblKausi;
 	private JLabel lblKK;
 	boolean kisattu = false; // Onko kuukaden kisa jo juostu
-	List<List<String>> kisaValiajat;
+	List<List<Result>> kisaValiajat;
 	int i = 0; // kisan väliajan indeksi (km = i + 1)
 
 	public void setTextPanel(JTextPane textP) {
@@ -46,11 +48,13 @@ public class PeliSwing {
 		valmennettava.setValmennettavaksi();
 		Runner runner2 = new Runner("Lasse", 90);
 		Runner runner3 = new Runner("Kenenisa", 98);
+		Runner runner4 = new Runner("Juha", 80);
 
 		ArrayList<Runner> runners = new ArrayList<Runner>();
 		runners.add(valmennettava); // TODO siirrä lisäys vasta siihen vaiheeseen kun kisa valitaan
 		runners.add(runner2);
 		runners.add(runner3);
+		runners.add(runner4);
 		
 		seasons = new Seasons(runners);
 		raceEng = new RaceEng();
@@ -76,7 +80,12 @@ public class PeliSwing {
 				JOptionPane.showMessageDialog(null, "Taso ei riitä kisaan");
 			}
 	        
-	        kisaValiajat = raceEng.raceSim(race);
+			raceEng.raceSim(race);
+	        kisaValiajat = race.getResults();
+	        
+	        for (List<Result> results: kisaValiajat) {
+			Collections.sort(results, Result.timeComp);
+	        }
 
 	        naytaTulos();
 						
@@ -97,14 +106,14 @@ public class PeliSwing {
 			str.append("Seuraava km painamalla välilyöntiä. Lopussa mene takaisin alkuun.\n");
 		}
 		
-        List<String> valiaika;
+        List<Result> valiaika;
         
 			valiaika = kisaValiajat.get(i);
 			
 			str.append((i+1) + " km\n");
 			
-			for (String tulos : valiaika) {
-				str.append(tulos);
+			for (Result result : valiaika) {
+				str.append(String.format("%-30s%s\n", result.getRunner(), convertTime(result.getTime())));
 			}
 			str.append("-----------\n");
 			textPanel.setText(str.toString());	
@@ -169,6 +178,18 @@ public class PeliSwing {
 
 	public void setLblKk(JLabel lblkk) {
 		lblKK = lblkk;
+	}
+	
+	/**
+	 * Muuntaa sekunnit minuuteiksi ja sekunneiksi
+	 * @param time
+	 * @return
+	 */
+	public String convertTime(double time) {
+		int seconds = (int) time % 60;
+		int minutes = (int) time / 60;
+		
+		return minutes + ":" + seconds;
 	}
 	
 	public void avaa() {

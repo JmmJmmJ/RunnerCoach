@@ -13,6 +13,8 @@ public class Race {
 	private String name;
 	private int kisanPituus = 10;
 	private List<Runner> runners = new ArrayList<Runner>();
+	private List<List<Result>> results = new ArrayList<List<Result>>();
+
 	private double level; // raja jota huonompia juoksijoita ei oteta kisaan
 
 	public Race(String name, double level) {
@@ -24,6 +26,14 @@ public class Race {
 		if (runner.getLevel() >= level) {
 			runners.add(runner);
 		}
+	}
+	
+	public void addResult(List<Result> result) {
+			results.add(result);
+	}
+	
+	public List<List<Result>> getResults() {
+		return results;
 	}
 	
 	public int getKisanPituus() {

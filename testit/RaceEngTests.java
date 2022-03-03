@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import RunnerCoachPeli.Race;
 import RunnerCoachPeli.RaceEng;
+import RunnerCoachPeli.Result;
 import RunnerCoachPeli.Runner;
 
 class RaceEngTests {
@@ -32,11 +33,16 @@ class RaceEngTests {
 		race.addRunnerToRace(runner3);
 		race.addRunnerToRace(runner4);
 		
-        List<List<String>> kisaValiajat = raceEng.raceSim(race);
-        assertEquals(kisaValiajat.get(0).get(0).contains("1. D"), true); 
-        assertEquals(kisaValiajat.get(0).get(1).contains("2. C"), true);        
-        assertEquals(kisaValiajat.get(0).get(2).contains("3. B"), true);        
-        assertEquals(kisaValiajat.get(0).get(3).contains("4. A"), true);        
+		raceEng.raceSim(race);
+		
+        List<List<Result>> kisaValiajat = race.getResults();
+        assertEquals(kisaValiajat.get(0).get(0).getRunner().getName().contains("A"), true);
+        assertEquals(kisaValiajat.get(0).get(1).getRunner().getName().contains("B"), true); 
+        assertEquals(kisaValiajat.get(0).get(2).getRunner().getName().contains("C"), true); 
+        assertEquals(kisaValiajat.get(0).get(3).getRunner().getName().contains("D"), true); 
+        
+        assertEquals(kisaValiajat.size(), race.getKisanPituus());
+        assertEquals(kisaValiajat.get(0).size(), 4);
 
 	}
 
