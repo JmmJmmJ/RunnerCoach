@@ -47,15 +47,6 @@ public class Seasons {
 		month = kuukausi;
 		seasonN = kausi;
 	}
-
-	/**
-	 * Lis‰‰ juoksijan kaudelle
-	 * TODO lis‰‰ mill‰ perusteella juoksijat valitaan kauteen
-	 * @param runner
-	public void addRunner(Runner runner) {	
-			seasons.get(seasonN-1).addRunner(runner);
-	}
-	*/
 	
 	/**
 	 * Lis‰‰ juoksijat kaudelle
