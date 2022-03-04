@@ -26,7 +26,6 @@ class RaceEngTests {
 	
 	Race race = new Race("kisa", 0);
 	
-
 	
 	@Test
 	void test() {
@@ -71,10 +70,19 @@ class RaceEngTests {
 		int injuries = 0;
 		double levelSum = 0;
 		int months = 100;
+		double min = 100;
+		double max = -1;
+		double level;
 		
 		for (int i = 0; i < months; i++) {
 			Random r = new Random();
-			levelSum = levelSum + valmennettava.getLevel();
+			level = valmennettava.getLevel();
+			
+			System.out.println(level);
+			min = Math.min(min, level);
+			max = Math.max(max, level);
+		
+			levelSum = levelSum + level;
 			valmennettava.training(training + r.nextInt(20));
 			training = training + increase;
 
@@ -89,10 +97,13 @@ class RaceEngTests {
 		System.out.println("Months: " + months);
 		System.out.println("Avg. level: " + levelSum/months);
 		System.out.println("Injuries: " + injuries);
+		System.out.println("Max: " + max + "Min: " + min);
 		
 		assertTrue(levelSum/months < 100);
 		assertTrue(levelSum/months > 0);
-		assertTrue(injuries > 0);
+		assertTrue(min > 0 && min < 100);
+		assertTrue(max > 20 && max < 101);
+		assertTrue(injuries > 0 );
 		assertTrue(injuries < 50);		
 		
 	}

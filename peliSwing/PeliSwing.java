@@ -138,6 +138,7 @@ public class PeliSwing {
 	public void seuraava() {
 		String harj = textFieldHarj.getText();
 		int harjoittelu = 0;
+		i = 0;
 		
 		try {
 		if (!harj.equals("")) {
