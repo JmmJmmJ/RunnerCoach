@@ -28,7 +28,7 @@ import javax.swing.JMenuItem;
  * @author Jyrki Mäki
  * @version 28.02.2021
  * 
- * TODO Kysy valmennettavan nimi. Jos kisa menossa. niin palaa kisaan kisa nappulasta
+ * TODO Kysy valmennettavan nimi. Tietoja välilehti ei päivity seuraava napista.
  * Tällä hetkellä vain yksinkertainen tallennus
  */
 public class GUI extends JFrame {

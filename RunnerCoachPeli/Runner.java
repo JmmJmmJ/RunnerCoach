@@ -19,7 +19,7 @@ public class Runner {
 	private double threshold = 50; // viikon juoksukilometrit, johon juoksia on sopeutunut. Tällä tasolla
 									// harjoitellessa juoksija ei kehity eikä rasitus nouse. Lasketaan kolmen
 									// viimeisen kuukauden perusteella. Aloittaessa 50,50,50
-	//private double stress = 0; // TODO juoksijan rasitustaso. Nostaa loukkaantumisriskiä ja laskee
+	private double stress = 0; // juoksijan rasitustaso. Nostaa loukkaantumisriskiä ja laskee
 								// suoritustasoa kisassa
 	private double[] training = { 50, 50, 50 }; // kolmen viimeisen viikon juoksukilometrit
 	private boolean valmennettava = false;
@@ -71,12 +71,15 @@ public class Runner {
 	public void training(double mileage) {
 		updateTrainingTable(mileage);
 		if (mileage > threshold && level < 99) {
-			level = level + Math.log((mileage / threshold - 1) * 100);
+			level = level + Math.log((mileage / threshold - 1) * 100)*(-0.00005*level*level+1);
 		} else { // kuntolaskee kun harjoittelu vähenee
-			double drop = 100 * ((1.0 * mileage / threshold - 1) * ((1.0 * mileage / threshold - 1)));
-			level = level - drop;
+			double drop = 50 * ((1.0 * mileage / threshold - 1) * ((1.0 * mileage / threshold - 1)));
+			if (level - drop > 0) {
+				level = level - drop;
+			}
 		}
 		updateThreshold();
+		updateStress();
 	}
 
 	/**
@@ -96,6 +99,18 @@ public class Runner {
 	 */
 	private void updateThreshold() {
 		threshold = 0.1 * training[0] + 0.3 * training[1] + 0.6 * training[2];
+	}
+	
+	private void updateStress() {
+		double st = (training[2]-130)*(training[2]-130)*(training[2]-130) / 27000;
+		
+		if (stress + st < 0) {
+			stress = 0;
+		} else if (stress + st > 99) {
+			stress = 99;
+		} else {
+			stress =+ st;
+		}
 	}
 
 	/**
@@ -124,7 +139,7 @@ public class Runner {
 		double prob = 0;
 		
 		if ( training > threshold ) {
-			prob = 3*(threshold / training - 1) * (threshold / training - 1);
+			prob = 3*(threshold / training - 1) * (threshold / training - 1) + stress/300;
 			if (prob >= 0.95) {
 				prob = 0.95;
 		}
@@ -146,6 +161,10 @@ public class Runner {
 			return Double.compare(result1, result2);
 		}
 	};
+	
+	public double getStress() {
+		return stress;
+	}
 
 	@Override
 	public String toString() {

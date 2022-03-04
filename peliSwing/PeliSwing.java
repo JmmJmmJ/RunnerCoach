@@ -147,8 +147,11 @@ public class PeliSwing {
 		valmennettava.training(harjoittelu);
 		
 		if (valmennettava.injury()) { // TODO eripituiset loukkaantumiset
-			JOptionPane.showMessageDialog(null, "Loukkaantuminen 2kk");
-			seasons.nextMonth(2);
+			JOptionPane.showMessageDialog(null, "Loukkaantuminen 1kk");
+			seasons.nextMonth(1);
+			valmennettava.training(0);
+			seasons.nextMonth(1);
+
 		} else {
 			seasons.nextMonth(1);
 		}
@@ -182,15 +185,14 @@ public class PeliSwing {
 	
 	/**
 	 * Muuntaa sekunnit minuuteiksi ja sekunneiksi
-	 * TODO korjaa loppunolla (25:1 -> 25:10)
 	 * @param time
 	 * @return
 	 */
 	public String convertTime(double time) {
 		int seconds = (int) time % 60;
 		int minutes = (int) time / 60;
-		
-		return minutes + ":" + seconds;
+
+		return minutes + ":" + String.format("%02d", seconds);
 	}
 	
 	public void avaa() {

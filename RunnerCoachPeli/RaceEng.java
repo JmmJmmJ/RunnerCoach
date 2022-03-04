@@ -15,7 +15,7 @@ import java.util.Random;
 public class RaceEng {
 	
 	private List<Runner> runners = new ArrayList<Runner>();
-	private double standarDeviation = 10;
+	private double standarDeviation = 5;
 	private int kisanPituus = 10;
 	
 	/**
@@ -27,7 +27,7 @@ public class RaceEng {
 		List<Result> results = new ArrayList<Result>();
 		Random r = new Random();
 		for (Runner runner : runners) {
-			double splitTime = (1760 - 2*runner.getLevel())/kisanPituus + r.nextGaussian()*standarDeviation; 
+			double splitTime = (0.41*kisanPituus*kisanPituus + 156.3*kisanPituus - 30 + 1.5*(100-runner.getLevel()) + runner.getStress()/50) / kisanPituus + r.nextGaussian()*standarDeviation;
 
 			double time = runner.getResult() + splitTime;
 			runner.setResult(time);
