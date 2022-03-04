@@ -118,7 +118,7 @@ public class Runner {
 	 * @return true, jos tulee loukkaantuminen
 	 */
 	public boolean injury() {
-		int probInt = (int) (injuryProb(threshold, training[2])*100);
+		int probInt = (int) (injuryProb(threshold, training[2], stress)*100);
 
 		Random ran = new Random();
 		int nxt = ran.nextInt(100);
@@ -135,11 +135,11 @@ public class Runner {
 	/**
 	 * Loukkaantumisen todennäköisyys
 	 */
-	public double injuryProb(double threshold, double training) {
+	public double injuryProb(double threshold, double training, double st) {
 		double prob = 0;
 		
 		if ( training > threshold ) {
-			prob = 3*(threshold / training - 1) * (threshold / training - 1) + stress/300;
+			prob = 3*(threshold / training - 1) * (threshold / training - 1) + st/100;
 			if (prob >= 0.95) {
 				prob = 0.95;
 		}
@@ -164,6 +164,10 @@ public class Runner {
 	
 	public double getStress() {
 		return stress;
+	}
+	
+	public double getTraining() {
+		return training[2];
 	}
 
 	@Override
