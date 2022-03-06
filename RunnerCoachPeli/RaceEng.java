@@ -26,13 +26,21 @@ public class RaceEng {
 		
 		List<Result> results = new ArrayList<Result>();
 		Random r = new Random();
+		
+		double optimalTime = 0.41*kisanPituus*kisanPituus + 156.3*kisanPituus - 30;
+		
 		for (Runner runner : runners) {
-			double splitTime = (0.41*kisanPituus*kisanPituus + 156.3*kisanPituus - 30 + 1.5*(100-runner.getLevel()) + runner.getStress()/50) / kisanPituus + r.nextGaussian()*standarDeviation;
-
+			double effectOflevel = 1.5*(100-runner.getLevel());
+			double effectOfStress = runner.getStress()/50;
+			double variation = r.nextGaussian()*standarDeviation;
+			
+			double splitTime = (optimalTime + effectOflevel + effectOfStress) / kisanPituus + variation;
+			
 			double time = runner.getResult() + splitTime;
 			runner.setResult(time);
 			
-			results.add(new Result(runner, time));
+			Result result = new Result(runner, time);
+			results.add(result);
 		}
 			race.addResult(results);
 	}

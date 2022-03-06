@@ -15,12 +15,12 @@ import java.util.Random;
 public class Runner {
 	private String name;
 	private double level; // juoksijan taso missä level=1 vastaa 30min 10k ja level=99 vastaa 27min 10k.
-							// Yksi taso vastaa noin 1.8s.
+							// Yksi taso vastaa noin 1.8s. [0, 100]
 	private double threshold = 50; // viikon juoksukilometrit, johon juoksia on sopeutunut. Tällä tasolla
 									// harjoitellessa juoksija ei kehity eikä rasitus nouse. Lasketaan kolmen
 									// viimeisen kuukauden perusteella. Aloittaessa 50,50,50
 	private double stress = 0; // juoksijan rasitustaso. Nostaa loukkaantumisriskiä ja laskee
-								// suoritustasoa kisassa
+								// suoritustasoa kisassa. [0, 100]
 	private double[] training = { 50, 50, 50 }; // kolmen viimeisen viikon juoksukilometrit
 	private boolean valmennettava = false;
 	private double lastResult = 0; // viime kisan aika sekunteina
@@ -71,9 +71,11 @@ public class Runner {
 	public void training(double mileage) {
 		updateTrainingTable(mileage);
 		if (mileage > threshold && level < 99) {
-			level = level + Math.log((mileage / threshold - 1) * 100)*(-0.00005*level*level+1);
+			double trainingEffect = Math.log((mileage / threshold - 1) * 100);
+			double effectOfLevel = (-0.00005*level*level+1); // [0, 1]
+			level = level + trainingEffect*effectOfLevel;
 		} else { // kuntolaskee kun harjoittelu vähenee
-			double drop = 50 * ((1.0 * mileage / threshold - 1) * ((1.0 * mileage / threshold - 1)));
+			double drop = 50 * ((mileage / threshold - 1) * (( mileage / threshold - 1)));
 			if (level - drop > 0) {
 				level = level - drop;
 			}
@@ -139,7 +141,8 @@ public class Runner {
 		double prob = 0;
 		
 		if ( training > threshold ) {
-			prob = 3*(threshold / training - 1) * (threshold / training - 1) + st/100;
+			double effectOfStress = st/100;
+			prob = 3*(threshold / training - 1) * (threshold / training - 1) + effectOfStress;
 			if (prob >= 0.95) {
 				prob = 0.95;
 		}
