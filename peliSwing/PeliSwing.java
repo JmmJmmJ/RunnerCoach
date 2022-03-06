@@ -165,6 +165,7 @@ public class PeliSwing {
 		} catch (NumberFormatException e) {
 		JOptionPane.showMessageDialog(null, "Virheellinen syöte kilometreissä");
 	}
+		naytaTiedot();
 	}
 	
 	public void paivitaTiedot() {
