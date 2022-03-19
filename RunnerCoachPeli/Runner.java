@@ -10,7 +10,6 @@ import java.util.Random;
  * @Author Jyrki Mäki
  * 
  * TODO speed/endurance
- * Ennätykset ja tulokset
  */
 public class Runner {
 	private String name;
@@ -24,6 +23,7 @@ public class Runner {
 	private double[] training = { 50, 50, 50 }; // kolmen viimeisen viikon juoksukilometrit
 	private boolean valmennettava = false;
 	private double lastResult = 0; // viime kisan aika sekunteina
+	private double record = -1;
 
 	public Runner(String name, double level) {
 		this.name = name;
@@ -41,7 +41,15 @@ public class Runner {
 	public double getLevel() {
 		return level;
 	}
-
+	
+	public double getRecord() {
+		return record;
+	}
+	
+	public void setRecord(double record) {
+		this.record = record;
+	}
+	
 	public void setValmennettavaksi() {
 		valmennettava = true;
 	}

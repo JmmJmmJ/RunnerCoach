@@ -60,9 +60,9 @@ public class PeliSwing {
 		raceEng = new RaceEng();
 	}
 
-
+	// TODO Huom ennätys päivittyy tällä hetkellä jo kisan katsomisen aikana
 	public void naytaTiedot() {
-		textPanel.setText(String.format("Kausi: %d Kuukausi: %d%nSeuraava kisa: %s%nTaso: %.0f", seasons.getSeason(), seasons.getMonth(), seasons.getRace(), valmennettava.getLevel()));
+		textPanel.setText(String.format("Kausi: %d Kuukausi: %d%nSeuraava kisa: %s%nTaso: %.0f%nEnnätys: %s", seasons.getSeason(), seasons.getMonth(), seasons.getRace(), valmennettava.getLevel(), this.convertTime(valmennettava.getRecord())));
 	}
 
 	
@@ -191,8 +191,13 @@ public class PeliSwing {
 	 * @return
 	 */
 	public String convertTime(double time) {
-		int seconds = (int) time % 60;
-		int minutes = (int) time / 60;
+		int seconds = 0;
+		int minutes = 0;
+		
+		if (time > 0) {
+			seconds = (int) time % 60;
+			minutes = (int) time / 60;
+		}
 
 		return minutes + ":" + String.format("%02d", seconds);
 	}

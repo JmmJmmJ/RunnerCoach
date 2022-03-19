@@ -59,6 +59,10 @@ public class RaceEng {
 		}
 		
 		for (Runner runner: runners) {
+			if ( runner.getResult() < runner.getRecord() || runner.getRecord() == -1 ) {
+				runner.setRecord(runner.getResult());
+			}
+
 			runner.setResult(0);
 		}
 		
