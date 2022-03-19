@@ -26,7 +26,6 @@ import javax.swing.JMenuItem;
 /**
  * Käyttöliittymä WindowBuilderilla
  * @author Jyrki Mäki
- * @version 19.03.2021
  * 
  * TODO Kysy valmennettavan nimi. Tietoja välilehti ei päivity seuraava napista.
  * Tällä hetkellä vain yksinkertainen tallennus
