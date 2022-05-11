@@ -29,7 +29,7 @@ public class RaceEng {
 		
 		double optimalTime = 0.41*kisanPituus*kisanPituus + 156.3*kisanPituus - 30;
 		
-		for (Runner runner : runners) {
+		runners.forEach(runner -> {
 			double effectOflevel = 1.5*(100-runner.getLevel());
 			double effectOfStress = runner.getStress()/50;
 			double variation = r.nextGaussian()*standarDeviation;
@@ -41,7 +41,7 @@ public class RaceEng {
 			
 			Result result = new Result(runner, time);
 			results.add(result);
-		}
+		});
 			race.addResult(results);
 	}
 	
@@ -58,13 +58,13 @@ public class RaceEng {
 			runKm(race);
 		}
 		
-		for (Runner runner: runners) {
+		runners.forEach(runner -> {
 			if ( runner.getResult() < runner.getRecord() || runner.getRecord() == -1 ) {
 				runner.setRecord(runner.getResult());
 			}
 
 			runner.setResult(0);
-		}
+		});
 		
 	}
 	

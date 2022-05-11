@@ -83,9 +83,9 @@ public class PeliSwing {
 			raceEng.raceSim(race);
 	        kisaValiajat = race.getResults();
 	        
-	        for (List<Result> results: kisaValiajat) {
+	        kisaValiajat.forEach(results -> {
 			Collections.sort(results, Result.timeComp);
-	        }
+	        });
 
 	        naytaTulos();
 						
@@ -112,9 +112,9 @@ public class PeliSwing {
 			
 			str.append((i+1) + " km\n");
 			
-			for (Result result : valiaika) {
+			valiaika.forEach(result -> {
 				str.append(String.format("%-30s%s\n", result.getRunner(), convertTime(result.getTime())));
-			}
+			});
 			str.append("-----------\n");
 			textPanel.setText(str.toString());	
 	}

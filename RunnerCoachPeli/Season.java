@@ -37,9 +37,9 @@ public class Season {
 	public void addRunners2Race(int month) {
 		Race nextRace = races.get(month - 1);
 
-		for (Runner runner : runners) {
+		runners.forEach(runner -> {
 			nextRace.addRunnerToRace(runner);
-		}
+		});
 	}
 
 	/**

@@ -18,9 +18,9 @@ public class Seasons {
 		
 		seasons.add(new Season(1));
 
-		for (Runner runner : runners) {
+		runners.forEach(runner -> {
 			seasons.get(seasonN-1).addRunner(runner);
-		}
+		});
 	}
 	
 	public Seasons() {
@@ -55,9 +55,9 @@ public class Seasons {
 	 * @param kausi
 	 */
 	public void addRunners(List<Runner> runners, int kausi) {
-		for (Runner runner : runners) {
+		runners.forEach(runner -> {
 			seasons.get(kausi-1).addRunner(runner);
-		}
+		});
 	}
 	
 	public Season getSeasonObj() {
